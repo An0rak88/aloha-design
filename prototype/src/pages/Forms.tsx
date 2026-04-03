@@ -1,62 +1,25 @@
-import { useState } from 'react'
-import { RotateCcw } from 'lucide-react'
-import { useApp } from '../contexts/AppContext'
-import PageShell from '../components/shared/PageShell'
-import { InputField, SelectField } from '../components/shared/FormField'
-import Button from '../components/shared/Button'
-import SuccessState from '../components/shared/SuccessState'
+import FormPage from '../components/shared/FormPage'
+import type { FormFieldConfig } from '../components/shared/FormPage'
+
+const greenhouses = ['K0', '01', '03', '04', '05', '06', '07', '08', 'HK']
+
+const fields: FormFieldConfig[] = [
+  { type: 'date', label: 'Harvest Date', required: true, defaultValue: '2026-04-01' },
+  { type: 'select', label: 'Greenhouse', required: true, placeholder: 'Select...', options: greenhouses.map(g => ({ value: g, label: g })) },
+  { type: 'time', label: 'Clock-in Time', required: true, half: true },
+  { type: 'time', label: 'Clock-out Time', required: true, half: true },
+  { type: 'number', label: '# of People', required: true, placeholder: '0' },
+  { type: 'number', label: 'Total Lbs', required: true, placeholder: '0' },
+  { type: 'number', label: 'Grade 1 Lbs', required: true, placeholder: '0' },
+]
 
 export default function Forms() {
-  const { device } = useApp()
-  const isPhone = device === 'phone'
-  const [submitted, setSubmitted] = useState(false)
-
-  if (submitted) {
-    return (
-      <PageShell phone={isPhone} className="flex items-center justify-center h-full">
-        <SuccessState
-          icon={<RotateCcw size={28} className="text-green-600" />}
-          title="Entry saved"
-          message="Harvest record submitted."
-          actionLabel="New Entry"
-          onAction={() => setSubmitted(false)}
-        />
-      </PageShell>
-    )
-  }
-
   return (
-    <PageShell phone={isPhone}>
-      <div className="flex flex-col gap-4">
-        <InputField label="Harvest Date" required type="date" defaultValue="2026-04-01" />
-        <SelectField
-          label="Greenhouse"
-          required
-          placeholder="Select..."
-          options={[
-            { value: 'K0', label: 'K0' },
-            { value: '01', label: '01' },
-            { value: '03', label: '03' },
-            { value: '04', label: '04' },
-            { value: '05', label: '05' },
-            { value: '06', label: '06' },
-            { value: '07', label: '07' },
-            { value: '08', label: '08' },
-            { value: 'HK', label: 'HK' },
-          ]}
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <InputField label="Clock-in Time" required type="time" />
-          <InputField label="Clock-out Time" required type="time" />
-        </div>
-        <InputField label="# of People" required type="number" placeholder="0" />
-        <InputField label="Total Lbs" required type="number" placeholder="0" />
-        <InputField label="Grade 1 Lbs" required type="number" placeholder="0" />
-
-        <Button variant="primary" size="lg" fullWidth onClick={() => setSubmitted(true)} className="mt-2">
-          Save Entry
-        </Button>
-      </div>
-    </PageShell>
+    <FormPage
+      fields={fields}
+      submitLabel="Save Entry"
+      successTitle="Entry saved"
+      successMessage="Harvest record submitted."
+    />
   )
 }
