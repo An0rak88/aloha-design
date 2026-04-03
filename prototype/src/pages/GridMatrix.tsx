@@ -1,5 +1,6 @@
 import { useApp } from '../contexts/AppContext'
 import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
 
 const greenhouses = ['K0', '08', '01', 'HK', '07', 'WA', '04', '02', '06', 'H5', '05', '03']
 const dates = ['04/01', '03/31', '03/30', '03/29', '03/28']
@@ -81,7 +82,7 @@ export default function GridMatrix() {
 
 function GridTable({ compact }: { compact: boolean }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+    <Card className="overflow-hidden">
       <table className="w-full">
         <thead>
           <tr className="border-b border-slate-200">
@@ -111,6 +112,6 @@ function GridTable({ compact }: { compact: boolean }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </Card>
   )
 }

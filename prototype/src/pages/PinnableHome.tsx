@@ -233,9 +233,9 @@ export default function PinnableHome() {
         </div>
         <div className="flex items-center gap-2">
           {configuring && (
-            <button onClick={() => setCatalogOpen(true)} className="flex items-center gap-1.5 px-3 py-2 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/25 border-none cursor-pointer">
+            <Button size="sm" onClick={() => setCatalogOpen(true)}>
               <Plus size={14} />{!isPhone && 'Add Widget'}
-            </button>
+            </Button>
           )}
           <button
             onClick={() => { setConfiguring(c => !c); setCatalogOpen(false); iaRef.current = null; setActiveId(null) }}
@@ -389,20 +389,20 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
     const k = kpis[widget.type] || { value: '—', unit: '', change: '', up: false, color: 'text-slate-800', trendColor: 'text-slate-500' }
     const TrendIcon = k.up ? TrendingUp : widget.type === 'kpi-flags' ? AlertTriangle : k.change ? TrendingDown : null
     return (
-      <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex flex-col justify-center ${configuring ? 'cursor-move' : ''}`}>
+      <Card className={`h-full p-4 flex flex-col justify-center ${configuring ? 'cursor-move' : ''}`}>
         <div className="flex items-center justify-between mb-1">
           <span className="text-xs text-slate-400">{widget.label}</span>
           {TrendIcon && <TrendIcon size={14} className={k.trendColor} />}
         </div>
         <div className={`text-3xl font-bold ${k.color}`}>{k.value}<span className="text-base text-slate-400 font-normal ml-1">{k.unit}</span></div>
         {k.change && <div className={`text-xs font-medium mt-1 ${k.trendColor}`}>{k.change} vs last week</div>}
-      </div>
+      </Card>
     )
   }
 
   if (widget.type === 'chart-harvest') {
     return (
-      <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
+      <Card className={`h-full p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
         <div className="text-sm font-semibold text-slate-800 mb-2">Harvest Trend</div>
         <div className="flex-1 min-h-0">
           <ResponsiveContainer width="100%" height="100%">
@@ -413,13 +413,13 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
             </AreaChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </Card>
     )
   }
 
   if (widget.type === 'chart-gh-yield') {
     return (
-      <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
+      <Card className={`h-full p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
         <div className="text-sm font-semibold text-slate-800 mb-2">GH Yield Today</div>
         <div className="flex-1 min-h-0">
           <ResponsiveContainer width="100%" height="100%">
@@ -429,7 +429,7 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </Card>
     )
   }
 
@@ -441,7 +441,7 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
       { title: 'Seed lettuce trays — GH 04', assignee: 'Sarah P.', done: true },
     ]
     return (
-      <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
+      <Card className={`h-full p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
         <div className="flex items-center justify-between mb-3">
           <div className="text-sm font-semibold text-slate-800">Today's Tasks</div>
           <button onClick={() => !configuring && onNavigate('/tasks')} className="flex items-center gap-0.5 text-xs text-green-600 font-medium bg-transparent border-none cursor-pointer p-0">All <ArrowRight size={10} /></button>
@@ -457,13 +457,13 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
             </div>
           ))}
         </div>
-      </div>
+      </Card>
     )
   }
 
   if (widget.type === 'alerts') {
     return (
-      <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
+      <Card className={`h-full p-4 flex flex-col ${configuring ? 'cursor-move' : ''}`}>
         <div className="text-sm font-semibold text-slate-800 mb-3">Alerts</div>
         <div className="flex flex-col gap-2.5 flex-1 overflow-hidden">
           <div className="flex items-start gap-2 p-2.5 bg-red-50 rounded-xl border border-red-200">
@@ -479,9 +479,9 @@ function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: W
             <div className="text-xs text-green-700">All scouting reports submitted on time</div>
           </div>
         </div>
-      </div>
+      </Card>
     )
   }
 
-  return <div className={`h-full bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-center text-sm text-slate-400 ${configuring ? 'cursor-move' : ''}`}>{widget.label}</div>
+  return <Card className={`h-full p-4 flex items-center justify-center text-sm text-slate-400 ${configuring ? 'cursor-move' : ''}`}>{widget.label}</Card>
 }

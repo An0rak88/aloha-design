@@ -106,7 +106,7 @@ export default function Scheduler() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <Card className="overflow-hidden">
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-200">
@@ -144,7 +144,7 @@ export default function Scheduler() {
               ))}
             </tbody>
           </table>
-        </div>
+        </Card>
 
         <FAB onClick={() => {}} />
     </PageShell>
