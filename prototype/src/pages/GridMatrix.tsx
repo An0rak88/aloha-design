@@ -1,4 +1,5 @@
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
 
 const greenhouses = ['K0', '08', '01', 'HK', '07', 'WA', '04', '02', '06', 'H5', '05', '03']
 const dates = ['04/01', '03/31', '03/30', '03/29', '03/28']
@@ -31,7 +32,7 @@ export default function GridMatrix() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="overflow-x-auto -mx-4 px-4">
           <div className="min-w-[600px]">
             <GridTable compact />
@@ -51,12 +52,12 @@ export default function GridMatrix() {
             <span className="text-xs text-slate-500">Rest</span>
           </div>
         </div>
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="p-6">
+    <PageShell>
       <div className="flex items-center justify-end mb-5">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
@@ -74,7 +75,7 @@ export default function GridMatrix() {
         </div>
       </div>
       <GridTable compact={false} />
-    </div>
+    </PageShell>
   )
 }
 

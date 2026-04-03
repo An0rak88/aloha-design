@@ -2,6 +2,8 @@ import { TrendingUp } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
 
 const weeklyHarvest = [
   { week: 'W9', cukes: 38000, lettuce: 12000 },
@@ -44,23 +46,23 @@ export default function DashboardAnalytical() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-white rounded-2xl p-3 border border-slate-200">
+          <Card className="p-3">
             <div className="text-xs text-slate-400">Weekly Harvest</div>
             <div className="text-2xl font-bold text-slate-800">45.2K<span className="text-xs text-slate-400 ml-1">lbs</span></div>
             <div className="text-xs text-green-600 font-medium flex items-center gap-0.5"><TrendingUp size={10} /> +5.1%</div>
-          </div>
-          <div className="bg-white rounded-2xl p-3 border border-slate-200">
+          </Card>
+          <Card className="p-3">
             <div className="text-xs text-slate-400">Grade 1</div>
             <div className="text-2xl font-bold text-green-600">95.2%</div>
             <div className="text-xs text-green-600 font-medium flex items-center gap-0.5"><TrendingUp size={10} /> +1.8%</div>
-          </div>
+          </Card>
         </div>
 
         {/* Mini chart */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200">
+        <Card className="p-4">
           <div className="text-sm font-semibold text-slate-800 mb-3">Weekly Harvest Trend</div>
           <div className="h-[140px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -71,17 +73,17 @@ export default function DashboardAnalytical() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
-      </div>
+        </Card>
+      </PageShell>
     )
   }
 
   return (
-    <div className="h-full overflow-auto p-6">
+    <PageShell className="h-full overflow-auto">
         {/* Chart grid */}
         <div className="grid grid-cols-2 gap-4">
           {/* Weekly harvest */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200">
+          <Card className="p-5">
             <h3 className="font-semibold text-slate-800 mb-4">Weekly Harvest Volume</h3>
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -95,10 +97,10 @@ export default function DashboardAnalytical() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </Card>
 
           {/* Grade distribution */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200">
+          <Card className="p-5">
             <h3 className="font-semibold text-slate-800 mb-4">Grade Distribution</h3>
             <div className="h-[220px] flex items-center">
               <ResponsiveContainer width="100%" height="100%">
@@ -121,10 +123,10 @@ export default function DashboardAnalytical() {
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
 
           {/* Chemistry trend */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200">
+          <Card className="p-5">
             <h3 className="font-semibold text-slate-800 mb-4">Chemistry EC Trend (K0)</h3>
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -138,10 +140,10 @@ export default function DashboardAnalytical() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </Card>
 
           {/* Labor efficiency */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200">
+          <Card className="p-5">
             <h3 className="font-semibold text-slate-800 mb-4">Labor Efficiency (lb/hr/person)</h3>
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -157,8 +159,8 @@ export default function DashboardAnalytical() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </Card>
         </div>
-    </div>
+    </PageShell>
   )
 }

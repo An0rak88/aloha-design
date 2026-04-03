@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { MapPin, Clock, CheckCircle2, AlertCircle } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
+import Button from '../components/shared/Button'
 
 export default function ClockIn() {
   const { device } = useApp()
@@ -9,7 +12,7 @@ export default function ClockIn() {
   const isPhone = device === 'phone'
 
   return (
-    <div className={`${isPhone ? 'p-4' : 'p-6'} flex flex-col items-center`}>
+    <PageShell phone={isPhone} className="flex flex-col items-center">
       <div className={`w-full ${isPhone ? '' : 'max-w-md'} text-center`}>
         {/* Status indicator */}
         <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full mb-5 ${
@@ -44,16 +47,15 @@ export default function ClockIn() {
 
         {/* Clock in/out button */}
         {inGeofence ? (
-          <button
+          <Button
             onClick={() => setClockedIn(c => !c)}
-            className={`w-full py-4 rounded-2xl text-lg font-semibold border-none cursor-pointer transition-all ${
-              clockedIn
-                ? 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-                : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/25 hover:shadow-xl'
-            }`}
+            variant={clockedIn ? 'secondary' : 'primary'}
+            size="lg"
+            fullWidth
+            className="py-4 text-lg font-semibold"
           >
             {clockedIn ? 'Clock Out' : 'Clock In'}
-          </button>
+          </Button>
         ) : (
           <div className="flex items-center gap-2 justify-center text-sm text-red-500">
             <AlertCircle size={16} />
@@ -63,7 +65,7 @@ export default function ClockIn() {
 
         {/* Today's log */}
         {clockedIn && (
-          <div className="mt-6 bg-white rounded-2xl border border-slate-200 p-4 text-left">
+          <Card className="mt-6 p-4 text-left">
             <h3 className="text-sm font-semibold text-slate-700 mb-3">Today's Log</h3>
             <div className="flex items-center justify-between py-2 border-b border-slate-100">
               <span className="text-sm text-slate-600">Clock In</span>
@@ -77,9 +79,9 @@ export default function ClockIn() {
               <span className="text-sm text-slate-600">Location</span>
               <span className="text-sm font-medium text-green-600">On-site</span>
             </div>
-          </div>
+          </Card>
         )}
       </div>
-    </div>
+    </PageShell>
   )
 }

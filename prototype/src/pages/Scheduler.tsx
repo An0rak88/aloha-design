@@ -1,6 +1,9 @@
-import { ChevronLeft, ChevronRight, Plus, User } from 'lucide-react'
+import { ChevronLeft, ChevronRight, User } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
+import FAB from '../components/shared/FAB'
 
 const employees = [
   { name: 'Marcus K.', role: 'Harvest Lead', dept: 'Grow' },
@@ -43,7 +46,7 @@ export default function Scheduler() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="flex gap-2 overflow-x-auto pb-3 mb-3">
           {depts.map(d => (
             <button
@@ -59,7 +62,7 @@ export default function Scheduler() {
         </div>
         <div className="flex flex-col gap-2">
           {filtered.map(emp => (
-            <div key={emp.name} className="bg-white rounded-2xl p-4 border border-slate-200">
+            <Card key={emp.name} className="p-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                   <User size={14} className="text-green-700" />
@@ -82,15 +85,15 @@ export default function Scheduler() {
                   )
                 })}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="h-full overflow-auto p-6 pb-20">
+    <PageShell className="h-full overflow-auto pb-20">
         <div className="flex items-center mb-5">
           <div className="flex items-center gap-3">
             <button className="p-1 rounded-lg hover:bg-slate-200 transition-colors border-none bg-transparent cursor-pointer">
@@ -143,11 +146,7 @@ export default function Scheduler() {
           </table>
         </div>
 
-        <div className="sticky bottom-6 flex justify-end pointer-events-none z-30">
-          <button className="pointer-events-auto w-14 h-14 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none cursor-pointer shadow-xl shadow-green-500/30 flex items-center justify-center hover:shadow-2xl transition-shadow">
-            <Plus size={24} />
-          </button>
-        </div>
-    </div>
+        <FAB onClick={() => {}} />
+    </PageShell>
   )
 }

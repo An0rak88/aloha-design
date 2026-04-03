@@ -1,8 +1,14 @@
 import { useState } from 'react'
-import { CheckCircle2, Circle, AlertTriangle, ChevronDown, Bot, MessageSquare, PartyPopper, Hand } from 'lucide-react'
+import { CheckCircle2, Circle, ChevronDown, Bot, MessageSquare, PartyPopper, Hand } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
+import Badge from '../components/shared/Badge'
+import Button from '../components/shared/Button'
+import Tabs from '../components/shared/Tabs'
+import SuccessState from '../components/shared/SuccessState'
 
 interface Task {
   id: string
@@ -31,10 +37,10 @@ const additionalTasks: Task[] = [
   { id: 'a3', title: 'Spray GH 07 — Oxidate treatment', assignee: 'Carlos M.', priority: 'medium', greenhouse: '07', instructions: 'Oxidate 2.0 at 1:200 dilution. Spray undersides of leaves, focus on Rows 1–8 where scouting found aphid pressure. Wear full PPE. Coordinate with Marcus on timing.' },
 ]
 
-const priorityConfig = {
-  high: { color: 'text-red-600 bg-red-50 border-red-200', icon: AlertTriangle },
-  medium: { color: 'text-amber-600 bg-amber-50 border-amber-200' },
-  low: { color: 'text-slate-500 bg-slate-50 border-slate-200' },
+const priorityBadgeColor: Record<Task['priority'], 'red' | 'amber' | 'slate'> = {
+  high: 'red',
+  medium: 'amber',
+  low: 'slate',
 }
 
 export default function TaskList() {
@@ -79,46 +85,34 @@ export default function TaskList() {
   const displayTasks = activeTab === 'todo' ? todoTasks : doneTasks
 
   return (
-    <div className={`${isPhone ? 'p-4' : 'p-6'}`}>
+    <PageShell phone={isPhone}>
       {/* Segmented tabs */}
-      <div className="flex bg-slate-200 rounded-2xl p-1 mb-5">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium border-none cursor-pointer transition-all ${
-              activeTab === tab.id
-                ? 'bg-white text-slate-800 shadow-sm'
-                : 'bg-transparent text-slate-500 hover:text-slate-700'
-            }`}
-          >
-            {tab.label}
-            <span className={`text-xs px-1.5 py-0.5 rounded-lg ${
-              activeTab === tab.id ? 'bg-green-100 text-green-700' : 'bg-slate-300 text-slate-600'
-            }`}>
-              {tab.count}
-            </span>
-          </button>
-        ))}
+      <div className="mb-5">
+        <Tabs
+          tabs={tabs}
+          active={activeTab}
+          onChange={(id) => setActiveTab(id as 'todo' | 'done')}
+        />
       </div>
 
       {/* All done state */}
-      {todoTasks.length === 0 && activeTab === 'todo' && (
+      {todoTasks.length === 0 && activeTab === 'todo' && !showAdditional && (
+        <SuccessState
+          icon={<PartyPopper size={28} className="text-green-600" />}
+          title="All caught up!"
+          message="You've completed all your assigned tasks for today."
+          actionLabel="Take on additional tasks"
+          onAction={() => setShowAdditional(true)}
+        />
+      )}
+
+      {todoTasks.length === 0 && activeTab === 'todo' && showAdditional && (
         <div className="text-center py-10">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-green-100 mb-4">
             <PartyPopper size={28} className="text-green-600" />
           </div>
           <h3 className="text-lg font-semibold text-slate-800 mb-1">All caught up!</h3>
           <p className="text-sm text-slate-500 mb-5">You've completed all your assigned tasks for today.</p>
-          {!showAdditional && (
-            <button
-              onClick={() => setShowAdditional(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/25 border-none cursor-pointer hover:shadow-xl transition-shadow"
-            >
-              <Hand size={16} />
-              Take on additional tasks
-            </button>
-          )}
         </div>
       )}
 
@@ -127,7 +121,7 @@ export default function TaskList() {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <span className="text-sm font-semibold text-slate-700">Available Tasks</span>
-            <span className="text-xs px-2 py-0.5 rounded-lg bg-blue-100 text-blue-700 font-medium">{additionalTasks.length} available</span>
+            <Badge color="blue">{additionalTasks.length} available</Badge>
           </div>
           <div className="flex flex-col gap-2">
             {additionalTasks.map(task => (
@@ -195,25 +189,29 @@ export default function TaskList() {
                   {todoTasks.find(t => t.id === confirmingId)?.title}
                 </p>
                 <div className="flex gap-2">
-                  <button
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    fullWidth
                     onClick={() => setConfirmingId(null)}
-                    className="flex-1 py-2.5 rounded-2xl text-sm font-medium text-slate-600 bg-slate-100 border-none cursor-pointer hover:bg-slate-200 transition-colors"
                   >
                     Cancel
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    fullWidth
                     onClick={() => completeTask(confirmingId)}
-                    className="flex-1 py-2.5 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/25 border-none cursor-pointer"
                   >
                     Yes, complete
-                  </button>
+                  </Button>
                 </div>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </div>
+    </PageShell>
   )
 }
 
@@ -230,14 +228,8 @@ function TaskCard({ task, isDone, isExpanded, toggleExpand, isManager, navigate,
   setConfirmingId: (id: string | null) => void
   isVolunteer?: boolean
 }) {
-  const priority = priorityConfig[task.priority]
-
   return (
-    <div
-      className={`bg-white rounded-2xl border transition-all ${
-        isExpanded ? 'border-green-300 shadow-md' : 'border-slate-200 hover:border-green-300 hover:shadow-md'
-      }`}
-    >
+    <Card active={isExpanded} className={!isExpanded ? 'hover:border-green-300 hover:shadow-md' : ''}>
       {/* Task header */}
       <div
         className="p-4 cursor-pointer"
@@ -270,24 +262,23 @@ function TaskCard({ task, isDone, isExpanded, toggleExpand, isManager, navigate,
                 <span className="text-sm text-slate-500">{task.assignee}</span>
               )}
               {task.greenhouse && (
-                <span className="text-xs px-2 py-0.5 rounded-lg bg-green-50 text-green-700 font-medium border border-green-200">
-                  GH {task.greenhouse}
-                </span>
+                <Badge color="green">GH {task.greenhouse}</Badge>
               )}
-              <span className={`text-xs px-2 py-0.5 rounded-lg font-medium border ${priority.color}`}>
+              <Badge color={priorityBadgeColor[task.priority]}>
                 {task.priority}
-              </span>
+              </Badge>
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {isVolunteer && (
-              <button
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={e => { e.stopPropagation() }}
-                className="px-3 py-1.5 rounded-xl text-xs font-medium text-green-700 bg-green-50 border border-green-200 cursor-pointer hover:bg-green-100 transition-colors"
               >
                 <Hand size={12} className="inline mr-1" />
                 Take this
-              </button>
+              </Button>
             )}
             {task.instructions && (
               <motion.div
@@ -342,6 +333,6 @@ function TaskCard({ task, isDone, isExpanded, toggleExpand, isManager, navigate,
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Card>
   )
 }

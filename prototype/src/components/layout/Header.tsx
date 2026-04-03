@@ -1,5 +1,6 @@
 import { Search, Command } from 'lucide-react'
 import { useApp } from '../../contexts/AppContext'
+import Avatar from '../shared/Avatar'
 
 export default function Header() {
   const { setCommandPaletteOpen } = useApp()
@@ -25,9 +26,7 @@ export default function Header() {
         </div>
       </button>
 
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-medium text-sm cursor-pointer">
-        U
-      </div>
+      <Avatar initials="U" size="md" />
     </header>
   )
 }

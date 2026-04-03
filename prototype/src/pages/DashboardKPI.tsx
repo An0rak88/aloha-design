@@ -1,6 +1,9 @@
 import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
+import Badge from '../components/shared/Badge'
 
 const harvestTrend = [
   { day: 'Mon', lbs: 6200 },
@@ -40,7 +43,7 @@ export default function DashboardKPI() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="mb-4">
           <h1 className="text-xl font-bold text-slate-800 m-0">Good morning, Eric</h1>
           <p className="text-sm text-slate-500 mt-1">Wednesday, April 1</p>
@@ -49,18 +52,18 @@ export default function DashboardKPI() {
         {/* KPI cards */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           {kpis.map(kpi => (
-            <div key={kpi.label} className="bg-white rounded-2xl p-3 border border-slate-200">
+            <Card key={kpi.label} className="p-3">
               <div className="text-xs text-slate-400 mb-1">{kpi.label}</div>
               <div className="text-2xl font-bold text-slate-800">{kpi.value}<span className="text-sm text-slate-400 font-normal ml-0.5">{kpi.unit}</span></div>
               <div className={`text-xs font-medium mt-1 ${kpi.up ? 'text-green-600' : kpi.color === 'red' ? 'text-red-600' : 'text-amber-600'}`}>
                 {kpi.change} vs last week
               </div>
-            </div>
+            </Card>
           ))}
         </div>
 
         {/* Mini chart */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200 mb-4">
+        <Card className="p-4 mb-4">
           <div className="text-sm font-semibold text-slate-800 mb-3">This Week's Harvest</div>
           <div className="h-[120px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -76,13 +79,13 @@ export default function DashboardKPI() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-        </div>
-      </div>
+        </Card>
+      </PageShell>
     )
   }
 
   return (
-    <div className="p-6">
+    <PageShell>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-slate-800 m-0">Good morning, Eric</h1>
@@ -93,7 +96,7 @@ export default function DashboardKPI() {
       {/* KPI cards */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {kpis.map(kpi => (
-          <div key={kpi.label} className="bg-white rounded-2xl p-5 border border-slate-200">
+          <Card key={kpi.label} className="p-5">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-slate-500">{kpi.label}</span>
               {kpi.up ? <TrendingUp size={16} className="text-green-500" /> :
@@ -104,13 +107,13 @@ export default function DashboardKPI() {
             <div className={`text-sm font-medium mt-1 ${kpi.up ? 'text-green-600' : kpi.color === 'red' ? 'text-red-600' : 'text-amber-600'}`}>
               {kpi.change} vs last week
             </div>
-          </div>
+          </Card>
         ))}
       </div>
 
       <div className="grid grid-cols-3 gap-4">
         {/* Harvest trend chart */}
-        <div className="col-span-2 bg-white rounded-2xl p-5 border border-slate-200">
+        <Card className="col-span-2 p-5">
           <h3 className="font-semibold text-slate-800 mb-4">Weekly Harvest Trend</h3>
           <div className="h-[240px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -128,10 +131,10 @@ export default function DashboardKPI() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </Card>
 
         {/* Tasks today */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200">
+        <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-slate-800">Today's Tasks</h3>
             <span className="text-xs px-2 py-1 rounded-lg bg-amber-100 text-amber-700 font-medium">{tasks.length} active</span>
@@ -153,7 +156,7 @@ export default function DashboardKPI() {
         </div>
 
         {/* GH Yield comparison */}
-        <div className="col-span-2 bg-white rounded-2xl p-5 border border-slate-200">
+        <Card className="col-span-2 p-5">
           <h3 className="font-semibold text-slate-800 mb-4">Greenhouse Yield Today</h3>
           <div className="h-[200px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -165,10 +168,10 @@ export default function DashboardKPI() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </Card>
 
         {/* Alerts */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200">
+        <Card className="p-5">
           <h3 className="font-semibold text-slate-800 mb-4">Alerts</h3>
           <div className="flex flex-col gap-3">
             <div className="flex items-start gap-2 p-3 bg-red-50 rounded-xl border border-red-200">
@@ -186,6 +189,6 @@ export default function DashboardKPI() {
           </div>
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }

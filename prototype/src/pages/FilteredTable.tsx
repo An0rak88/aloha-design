@@ -1,6 +1,9 @@
 import { ArrowUpDown, Download, ChevronRight } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
+import Button from '../components/shared/Button'
 
 interface HarvestRow {
   id: string
@@ -40,7 +43,7 @@ export default function FilteredTable() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="flex gap-2 overflow-x-auto pb-3 mb-3">
           {greenhouses.slice(0, 6).map(gh => (
             <button
@@ -56,7 +59,7 @@ export default function FilteredTable() {
         </div>
         <div className="flex flex-col gap-2">
           {filtered.map(row => (
-            <div key={row.id} className="bg-white rounded-2xl p-4 border border-slate-200">
+            <Card key={row.id} className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold text-slate-800">{row.dateGH}</span>
                 <span className={`font-bold ${row.g1pct >= 95 ? 'text-green-600' : 'text-amber-600'}`}>{row.g1pct}%</span>
@@ -66,20 +69,20 @@ export default function FilteredTable() {
                 <span>{row.people} people</span>
                 <span>{row.lbPerHr} lb/hr</span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="h-full overflow-auto p-6">
+    <PageShell className="h-full overflow-auto">
         <div className="flex items-center justify-end mb-5">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-medium text-slate-600 border border-slate-200 bg-white cursor-pointer hover:bg-slate-50">
+          <Button variant="secondary" size="md">
             <Download size={14} />
             Export
-          </button>
+          </Button>
         </div>
 
         {/* Date group header */}
@@ -123,6 +126,6 @@ export default function FilteredTable() {
             </tbody>
           </table>
         </div>
-    </div>
+    </PageShell>
   )
 }

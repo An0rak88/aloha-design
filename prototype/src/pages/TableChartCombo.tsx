@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
 
 const yieldData = [
   { date: '3/25', k0: 1850, '01': 1500, '08': 1200 },
@@ -27,8 +29,8 @@ export default function TableChartCombo() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
-        <div className="bg-white rounded-2xl p-4 border border-slate-200 mb-4">
+      <PageShell phone>
+        <Card className="p-4 mb-4">
           <div className="h-[160px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={yieldData}>
@@ -41,25 +43,25 @@ export default function TableChartCombo() {
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </Card>
         <div className="flex flex-col gap-2">
           {tableData.slice(0, 3).map(row => (
-            <div key={row.date} className="bg-white rounded-2xl p-3 border border-slate-200">
+            <Card key={row.date} className="p-3">
               <div className="text-xs text-slate-400 mb-2">{row.date}</div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div><div className="text-xs text-slate-400">K0</div><div className="font-bold text-slate-800">{row.k0.toLocaleString()}</div></div>
                 <div><div className="text-xs text-slate-400">01</div><div className="font-bold text-slate-800">{row.o1.toLocaleString()}</div></div>
                 <div><div className="text-xs text-slate-400">08</div><div className="font-bold text-slate-800">{row.o8.toLocaleString()}</div></div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="p-6">
+    <PageShell>
       <div className="flex items-center justify-end mb-5">
         <div className="flex items-center gap-3">
           {[{ id: 'k0', label: 'K0', color: '#22c55e' }, { id: '01', label: '01', color: '#3b82f6' }, { id: '08', label: '08', color: '#f59e0b' }].map(gh => (
@@ -78,7 +80,7 @@ export default function TableChartCombo() {
       </div>
 
       {/* Chart */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 mb-4">
+      <Card className="p-5 mb-4">
         <div className="h-[280px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={yieldData}>
@@ -91,10 +93,10 @@ export default function TableChartCombo() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-      </div>
+      </Card>
 
       {/* Data table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <Card className="overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-200">
@@ -121,7 +123,7 @@ export default function TableChartCombo() {
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
+      </Card>
+    </PageShell>
   )
 }

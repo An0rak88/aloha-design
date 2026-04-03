@@ -9,6 +9,7 @@ import MobileDrawer from './MobileDrawer'
 import PhoneFrame from './PhoneFrame'
 import FloatingToolbar from './FloatingToolbar'
 import CommandPalette from '../shared/CommandPalette'
+import Avatar from '../shared/Avatar'
 
 export default function AppLayout() {
   const { role, device } = useApp()
@@ -36,9 +37,7 @@ export default function AppLayout() {
             )}
             <span className="font-semibold text-slate-800 text-sm">Aloha</span>
             <div className="ml-auto">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-medium text-[11px] cursor-pointer">
-                U
-              </div>
+              <Avatar initials="U" size="sm" />
             </div>
           </div>
           {/* Phone content */}

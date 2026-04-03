@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Droplets, Thermometer, Zap, AlertTriangle } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
 
 interface GHStatus {
   id: string
@@ -45,7 +47,7 @@ export default function Visualization() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="grid grid-cols-3 gap-2 mb-4">
           {ghStatuses.map(gh => (
             <button
@@ -63,12 +65,12 @@ export default function Visualization() {
         </div>
 
         {selectedGH && <GHDetail gh={selectedGH} />}
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="p-6">
+    <PageShell>
       <div className="grid grid-cols-3 gap-6">
         {/* Greenhouse grid */}
         <div className="col-span-2">
@@ -116,14 +118,14 @@ export default function Visualization() {
           {selectedGH ? (
             <GHDetail gh={selectedGH} />
           ) : (
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 text-center">
+            <Card className="p-6 text-center">
               <div className="text-slate-400 mb-2">Select a greenhouse</div>
               <p className="text-sm text-slate-400">Click on a greenhouse to view detailed readings</p>
-            </div>
+            </Card>
           )}
 
           {/* Legend */}
-          <div className="bg-white rounded-2xl p-4 border border-slate-200 mt-4">
+          <Card className="p-4 mt-4">
             <h3 className="text-sm font-semibold text-slate-800 mb-3">Status Legend</h3>
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
@@ -139,10 +141,10 @@ export default function Visualization() {
                 <span className="text-sm text-slate-600">Alert — readings out of range</span>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }
 
@@ -155,7 +157,7 @@ function GHDetail({ gh }: { gh: GHStatus }) {
   ]
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-slate-200">
+    <Card className="p-5">
       <div className="flex items-center gap-3 mb-4">
         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${statusColors[gh.status]} flex items-center justify-center shadow-lg`}>
           <span className="text-white font-bold text-sm">{gh.id}</span>
@@ -180,6 +182,6 @@ function GHDetail({ gh }: { gh: GHStatus }) {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   )
 }

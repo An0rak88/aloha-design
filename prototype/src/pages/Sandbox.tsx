@@ -1,5 +1,7 @@
 import { Code, Play, Plus, Layout, Table, BarChart3, FileText } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
+import PageShell from '../components/shared/PageShell'
+import Card from '../components/shared/Card'
 
 const templates = [
   { id: '1', icon: Layout, label: 'Custom Dashboard', desc: 'Build a personal KPI view' },
@@ -19,26 +21,28 @@ export default function Sandbox() {
 
   if (isPhone) {
     return (
-      <div className="p-4">
+      <PageShell phone>
         <div className="flex flex-col gap-2">
           {templates.map(t => (
-            <button key={t.id} className="flex items-center gap-3 bg-white rounded-2xl p-4 border border-slate-200 cursor-pointer text-left w-full">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-                <t.icon size={18} className="text-purple-600" />
+            <Card key={t.id} className="p-4 cursor-pointer">
+              <div className="flex items-center gap-3 text-left w-full">
+                <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+                  <t.icon size={18} className="text-purple-600" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-800">{t.label}</div>
+                  <div className="text-xs text-slate-400">{t.desc}</div>
+                </div>
               </div>
-              <div>
-                <div className="text-sm font-medium text-slate-800">{t.label}</div>
-                <div className="text-xs text-slate-400">{t.desc}</div>
-              </div>
-            </button>
+            </Card>
           ))}
         </div>
-      </div>
+      </PageShell>
     )
   }
 
   return (
-    <div className="p-6">
+    <PageShell>
       <div className="flex items-center justify-end mb-6">
         <button className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-purple-600 shadow-lg shadow-purple-500/25 border-none cursor-pointer">
           <Plus size={16} />
@@ -52,18 +56,17 @@ export default function Sandbox() {
           <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-3">Start from a template</h3>
           <div className="grid grid-cols-2 gap-3">
             {templates.map(t => (
-              <button
-                key={t.id}
-                className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-slate-200 cursor-pointer hover:border-purple-300 hover:shadow-md transition-all text-left w-full"
-              >
-                <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-                  <t.icon size={22} className="text-purple-600" />
+              <Card key={t.id} onClick={() => {}} className="p-5">
+                <div className="flex items-center gap-4 text-left w-full">
+                  <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+                    <t.icon size={22} className="text-purple-600" />
+                  </div>
+                  <div>
+                    <div className="font-medium text-slate-800">{t.label}</div>
+                    <div className="text-sm text-slate-400 mt-0.5">{t.desc}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-medium text-slate-800">{t.label}</div>
-                  <div className="text-sm text-slate-400 mt-0.5">{t.desc}</div>
-                </div>
-              </button>
+              </Card>
             ))}
           </div>
         </div>
@@ -73,7 +76,7 @@ export default function Sandbox() {
           <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-3">My Projects</h3>
           <div className="flex flex-col gap-3">
             {myProjects.map(p => (
-              <div key={p.id} className="bg-white rounded-2xl p-4 border border-slate-200 cursor-pointer hover:border-purple-300 transition-colors">
+              <Card key={p.id} onClick={() => {}} className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Code size={14} className="text-purple-500" />
                   <span className="font-medium text-slate-800 text-sm">{p.name}</span>
@@ -82,7 +85,7 @@ export default function Sandbox() {
                   <span>{p.type}</span>
                   <span>{p.updated}</span>
                 </div>
-              </div>
+              </Card>
             ))}
             <div className="bg-slate-50 rounded-2xl p-4 border-2 border-dashed border-slate-200 text-center cursor-pointer hover:border-purple-300 transition-colors">
               <Plus size={18} className="text-slate-400 mx-auto mb-1" />
@@ -91,6 +94,6 @@ export default function Sandbox() {
           </div>
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }

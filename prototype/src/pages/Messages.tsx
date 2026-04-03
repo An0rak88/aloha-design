@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Send, Paperclip, CheckSquare } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
+import Avatar from '../components/shared/Avatar'
+import Button from '../components/shared/Button'
 
 interface Message {
   id: string
@@ -37,9 +39,7 @@ export default function Messages() {
         <div className="flex-1 overflow-y-auto">
           {conversations.map(c => (
             <div key={c.id} className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 active:bg-slate-50 cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-medium text-sm shrink-0">
-                {c.name.charAt(0)}
-              </div>
+              <Avatar initials={c.name.charAt(0)} size="lg" className="shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-slate-800 text-sm">{c.name}</span>
@@ -75,9 +75,7 @@ export default function Messages() {
                 activeConvo === c.id ? 'bg-green-50 border-r-2 border-green-500' : 'hover:bg-slate-50'
               }`}
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-medium text-sm shrink-0">
-                {c.name.charAt(0)}
-              </div>
+              <Avatar initials={c.name.charAt(0)} size="lg" className="shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-slate-800 text-sm">{c.name}</span>
@@ -98,7 +96,7 @@ export default function Messages() {
       {/* Message thread */}
       <div className="flex-1 flex flex-col bg-slate-50">
         <div className="px-6 py-3 bg-white border-b border-slate-200 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-medium text-sm">E</div>
+          <Avatar initials="E" size="md" />
           <div>
             <span className="font-semibold text-slate-800 text-sm">Eric S.</span>
             <span className="text-xs text-slate-400 ml-2">Manager</span>
@@ -136,9 +134,9 @@ export default function Messages() {
               placeholder="Type a message..."
               className="flex-1 bg-transparent border-none outline-none text-sm text-slate-800 placeholder:text-slate-400"
             />
-            <button className="p-1.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none cursor-pointer">
+            <Button size="sm" className="p-1.5 rounded-xl">
               <Send size={16} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

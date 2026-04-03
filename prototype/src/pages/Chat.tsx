@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Send, Sparkles, Plus, Clock, MessageSquare } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
+import Button from '../components/shared/Button'
 
 interface ChatMessage {
   id: string
@@ -73,9 +74,9 @@ export default function Chat() {
               placeholder="Ask about your farm data..."
               className="flex-1 bg-transparent border-none outline-none text-sm text-slate-800 placeholder:text-slate-400"
             />
-            <button className="p-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none cursor-pointer shadow-lg shadow-green-500/25">
+            <Button size="sm" className="p-2 rounded-xl">
               <Send size={16} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -87,10 +88,10 @@ export default function Chat() {
       {/* Chat history sidebar */}
       <div className="w-[260px] bg-white border-r border-slate-200 flex flex-col shrink-0">
         <div className="p-4 border-b border-slate-200">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg shadow-green-500/25 border-none cursor-pointer hover:shadow-xl transition-shadow">
+          <Button fullWidth>
             <Plus size={16} />
             New Chat
-          </button>
+          </Button>
         </div>
         <div className="flex-1 overflow-y-auto">
           <div className="px-3 py-2">
@@ -156,9 +157,9 @@ export default function Chat() {
               placeholder="Ask about your farm data..."
               className="flex-1 bg-transparent border-none outline-none text-sm text-slate-800 placeholder:text-slate-400"
             />
-            <button className="p-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white border-none cursor-pointer shadow-lg shadow-green-500/25">
+            <Button size="sm" className="p-2 rounded-xl">
               <Send size={16} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
