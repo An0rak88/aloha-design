@@ -16,6 +16,7 @@ import Chat from './pages/Chat'
 import Sandbox from './pages/Sandbox'
 import ClockIn from './pages/ClockIn'
 import AssignTask from './pages/AssignTask'
+import ModulePlaceholder from './pages/ModulePlaceholder'
 
 function RoleGuard({ page, children }: { page: string; children: React.ReactNode }) {
   const { role } = useApp()
@@ -41,6 +42,13 @@ export default function App() {
         <Route path="/grid" element={<RoleGuard page="grid"><GridMatrix /></RoleGuard>} />
         <Route path="/filtered-table" element={<RoleGuard page="filtered-table"><FilteredTable /></RoleGuard>} />
         <Route path="/scheduler" element={<RoleGuard page="scheduler"><Scheduler /></RoleGuard>} />
+        <Route path="/grow" element={<RoleGuard page="grow"><ModulePlaceholder name="Grow" /></RoleGuard>} />
+        <Route path="/pack" element={<RoleGuard page="pack"><ModulePlaceholder name="Pack" /></RoleGuard>} />
+        <Route path="/sales" element={<RoleGuard page="sales"><ModulePlaceholder name="Sales" /></RoleGuard>} />
+        <Route path="/food-safety" element={<RoleGuard page="food-safety"><ModulePlaceholder name="Food Safety" /></RoleGuard>} />
+        <Route path="/maintenance" element={<RoleGuard page="maintenance"><ModulePlaceholder name="Maintenance" /></RoleGuard>} />
+        <Route path="/inventory" element={<RoleGuard page="inventory"><ModulePlaceholder name="Inventory" /></RoleGuard>} />
+        <Route path="/hr" element={<RoleGuard page="hr"><ModulePlaceholder name="Human Resources" /></RoleGuard>} />
         <Route path="/table-chart" element={<RoleGuard page="table-chart"><TableChartCombo /></RoleGuard>} />
         <Route path="/visualization" element={<RoleGuard page="visualization"><Visualization /></RoleGuard>} />
         <Route path="/messages" element={<RoleGuard page="messages"><Messages /></RoleGuard>} />

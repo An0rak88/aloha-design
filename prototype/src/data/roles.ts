@@ -27,7 +27,7 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'D+R',
     primeDevice: 'phone',
     homeRoute: '/tasks',
-    pages: ['tasks', 'forms', 'grid', 'messages', 'chat', 'clock-in'],
+    pages: ['tasks', 'forms', 'grid', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'messages', 'chat', 'clock-in'],
   },
   manager: {
     id: 'manager',
@@ -35,8 +35,8 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'Mgr',
     primeDevice: 'computer',
     homeRoute: '/dashboard',
-    pages: ['dashboard', 'tasks', 'assign-task', 'filtered-table', 'scheduler', 'chat'],
-    allPages: ['dashboard', 'tasks', 'assign-task', 'forms', 'grid', 'filtered-table', 'scheduler', 'visualization', 'messages', 'clock-in', 'chat'],
+    pages: ['dashboard', 'tasks', 'assign-task', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'chat'],
+    allPages: ['dashboard', 'tasks', 'assign-task', 'forms', 'grid', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'visualization', 'messages', 'clock-in', 'chat'],
   },
   owner: {
     id: 'owner',
@@ -44,8 +44,8 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'Owner',
     primeDevice: 'computer',
     homeRoute: '/dashboard',
-    pages: ['dashboard', 'analytics', 'table-chart', 'visualization', 'chat', 'sandbox'],
-    allPages: ['dashboard', 'analytics', 'tasks', 'forms', 'grid', 'filtered-table', 'scheduler', 'table-chart', 'visualization', 'messages', 'clock-in', 'chat', 'sandbox'],
+    pages: ['dashboard', 'analytics', 'table-chart', 'visualization', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'chat', 'sandbox'],
+    allPages: ['dashboard', 'analytics', 'tasks', 'forms', 'grid', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'table-chart', 'visualization', 'messages', 'clock-in', 'chat', 'sandbox'],
   },
   dev: {
     id: 'dev',
@@ -53,8 +53,8 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'Dev',
     primeDevice: 'computer',
     homeRoute: '/dashboard',
-    pages: ['dashboard', 'analytics', 'table-chart', 'visualization', 'chat', 'sandbox'],
-    allPages: ['dashboard', 'analytics', 'tasks', 'forms', 'grid', 'filtered-table', 'scheduler', 'table-chart', 'visualization', 'messages', 'clock-in', 'chat', 'sandbox'],
+    pages: ['dashboard', 'analytics', 'table-chart', 'visualization', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'chat', 'sandbox'],
+    allPages: ['dashboard', 'analytics', 'tasks', 'forms', 'grid', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'table-chart', 'visualization', 'messages', 'clock-in', 'chat', 'sandbox'],
   },
 }
 
@@ -91,6 +91,13 @@ export const allNavItems: NavItem[] = [
   { id: 'visualization', label: 'Visualization', icon: 'Activity', route: '/visualization' },
   { id: 'messages', label: 'Messages', icon: 'MessageSquare', route: '/messages' },
   { id: 'clock-in', label: 'Clock In', icon: 'MapPin', route: '/clock-in' },
+  { id: 'grow', label: 'Grow', icon: 'Sprout', route: '/grow' },
+  { id: 'pack', label: 'Pack', icon: 'Package', route: '/pack' },
+  { id: 'sales', label: 'Sales', icon: 'DollarSign', route: '/sales' },
+  { id: 'food-safety', label: 'Food Safety', icon: 'ShieldCheck', route: '/food-safety' },
+  { id: 'maintenance', label: 'Maintenance', icon: 'Wrench', route: '/maintenance' },
+  { id: 'inventory', label: 'Inventory', icon: 'Warehouse', route: '/inventory' },
+  { id: 'hr', label: 'Human Resources', icon: 'Users', route: '/hr' },
   { id: 'chat', label: 'AI Chat', icon: 'Bot', route: '/chat' },
   { id: 'sandbox', label: 'Sandbox', icon: 'Code', route: '/sandbox' },
 ]
@@ -105,6 +112,7 @@ export function getNavForRole(role: Role): NavItem[] {
 
 export const navSections: { label: string; items: string[] }[] = [
   { label: 'Dashboards', items: ['dashboard', 'analytics', 'table-chart', 'visualization'] },
+  { label: 'Modules', items: ['grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr'] },
   { label: 'Data Entry', items: ['forms', 'grid'] },
   { label: 'Management', items: ['tasks', 'assign-task', 'scheduler', 'filtered-table'] },
   { label: 'Other', items: ['chat', 'messages', 'clock-in', 'sandbox'] },
