@@ -1,5 +1,5 @@
-import { Send } from 'lucide-react'
 import FormPage from '../components/shared/FormPage'
+
 import type { FormFieldConfig } from '../components/shared/FormPage'
 
 const employees = ['Marcus K.', 'Ana R.', 'James T.', 'David L.', 'Sarah P.', 'Lisa W.', 'Carlos M.']

@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Settings, X, Plus, Check, ArrowRight, CheckSquare, TrendingUp, TrendingDown, BarChart3, ClipboardList, FlaskConical, Grid3x3, CalendarDays, MapPin, Activity, MessageSquare, Move, AlertTriangle, CheckCircle2, Bell } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import PageShell from '../components/shared/PageShell'
 import Card from '../components/shared/Card'
-import Badge from '../components/shared/Badge'
 import Button from '../components/shared/Button'
 import { AreaChart, Area, BarChart, Bar, ResponsiveContainer, XAxis } from 'recharts'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -141,7 +139,7 @@ export default function PinnableHome() {
   const [configuring, setConfiguring] = useState(false)
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [initialized, setInitialized] = useState(false)
+  const [, setInitialized] = useState(false)
   const iaRef = useRef<Interaction | null>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
 
@@ -224,26 +222,22 @@ export default function PinnableHome() {
 
   return (
     <div className={`${isPhone ? 'p-3' : 'p-6'} relative`}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h1 className={`font-bold text-slate-800 m-0 ${isPhone ? 'text-xl' : 'text-2xl'}`}>Dashboard</h1>
-          {!configuring && <p className="text-sm text-slate-500 mt-1">Your dashboard</p>}
-          {configuring && <p className="text-sm text-amber-600 mt-1">Drag to move — drag corners to resize — no limits</p>}
-        </div>
-        <div className="flex items-center gap-2">
-          {configuring && (
-            <Button size="sm" onClick={() => setCatalogOpen(true)}>
-              <Plus size={14} />{!isPhone && 'Add Widget'}
-            </Button>
-          )}
-          <button
-            onClick={() => { setConfiguring(c => !c); setCatalogOpen(false); iaRef.current = null; setActiveId(null) }}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-sm font-medium border cursor-pointer transition-all ${configuring ? 'bg-green-500 text-white border-green-500 shadow-lg shadow-green-500/25' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
-          >
-            {configuring ? <><Check size={14} /> Done</> : <><Settings size={14} /> {!isPhone && 'Configure'}</>}
-          </button>
-        </div>
+      {/* Configuring hint */}
+      {configuring && <p className="text-sm text-amber-600 mb-4">Drag to move — drag corners to resize — no limits</p>}
+
+      {/* Floating configure bar */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        {configuring && (
+          <Button size="sm" onClick={() => setCatalogOpen(true)} className="shadow-lg">
+            <Plus size={14} />{!isPhone && 'Add Widget'}
+          </Button>
+        )}
+        <button
+          onClick={() => { setConfiguring(c => !c); setCatalogOpen(false); iaRef.current = null; setActiveId(null) }}
+          className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium border cursor-pointer transition-all shadow-lg ${configuring ? 'bg-green-500 text-white border-green-500 shadow-green-500/25' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 shadow-slate-200/50'}`}
+        >
+          {configuring ? <><Check size={14} /> Done</> : <><Settings size={14} /> {!isPhone && 'Configure'}</>}
+        </button>
       </div>
 
       {/* Canvas */}
@@ -362,7 +356,7 @@ export default function PinnableHome() {
 
 // --- Widget content ---
 
-function WidgetContent({ widget, configuring, onNavigate, isPhone }: { widget: Widget; configuring: boolean; onNavigate: (p: string) => void; isPhone: boolean }) {
+function WidgetContent({ widget, configuring, onNavigate, isPhone: _isPhone }: { widget: Widget; configuring: boolean; onNavigate: (p: string) => void; isPhone: boolean }) {
   const cat = widgetCatalog.find(c => c.type === widget.type)
 
   if (widget.type.startsWith('shortcut-')) {

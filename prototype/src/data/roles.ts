@@ -27,7 +27,7 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'D+R',
     primeDevice: 'phone',
     homeRoute: '/tasks',
-    pages: ['tasks', 'forms', 'grid', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'messages', 'chat', 'clock-in'],
+    pages: ['tasks', 'grow', 'messages', 'clock-in', 'chat'],
   },
   manager: {
     id: 'manager',
@@ -35,8 +35,8 @@ export const roles: Record<Role, RoleConfig> = {
     shortLabel: 'Mgr',
     primeDevice: 'computer',
     homeRoute: '/dashboard',
-    pages: ['dashboard', 'tasks', 'assign-task', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'chat'],
-    allPages: ['dashboard', 'tasks', 'assign-task', 'forms', 'grid', 'filtered-table', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'visualization', 'messages', 'clock-in', 'chat'],
+    pages: ['dashboard', 'tasks', 'assign-task', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'chat'],
+    allPages: ['dashboard', 'tasks', 'assign-task', 'forms', 'grid', 'scheduler', 'grow', 'pack', 'sales', 'food-safety', 'maintenance', 'inventory', 'hr', 'visualization', 'messages', 'clock-in', 'chat'],
   },
   owner: {
     id: 'owner',
@@ -119,8 +119,9 @@ export const allNavItems: NavItem[] = [
 export function getNavForRole(role: Role): NavItem[] {
   const config = roles[role]
   const overrides = config.navLabelOverrides || {}
-  return allNavItems
-    .filter(item => config.pages.includes(item.id))
+  return config.pages
+    .map(id => allNavItems.find(item => item.id === id))
+    .filter((item): item is NavItem => !!item)
     .map(item => overrides[item.id] ? { ...item, label: overrides[item.id] } : item)
 }
 

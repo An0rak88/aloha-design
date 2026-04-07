@@ -35,7 +35,6 @@ export default function AppLayout() {
                 <span className="text-white font-bold text-xs">A</span>
               </div>
             )}
-            <span className="font-semibold text-slate-800 text-sm">Aloha</span>
             <div className="ml-auto">
               <Avatar initials="U" size="sm" />
             </div>
@@ -55,10 +54,10 @@ export default function AppLayout() {
 
   return (
     <>
-      <div className="h-screen flex flex-col bg-white">
-        <Header />
-        <div className="flex flex-1 overflow-hidden">
-          <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
+      <div className="h-screen flex bg-white">
+        <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <Header />
           <main className="flex-1 overflow-y-auto bg-slate-50">
             <Outlet />
           </main>

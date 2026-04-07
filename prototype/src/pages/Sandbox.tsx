@@ -1,4 +1,4 @@
-import { Code, Play, Plus, Layout, Table, BarChart3, FileText } from 'lucide-react'
+import { Code, Plus, Layout, Table, BarChart3, FileText } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
 import PageShell from '../components/shared/PageShell'
 import Card from '../components/shared/Card'

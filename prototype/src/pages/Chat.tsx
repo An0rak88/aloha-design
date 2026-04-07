@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Send, Sparkles, Plus, Clock, MessageSquare } from 'lucide-react'
+import { Send, Sparkles, Plus, Clock } from 'lucide-react'
 import { useApp } from '../contexts/AppContext'
 import Button from '../components/shared/Button'
 

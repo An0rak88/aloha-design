@@ -3,7 +3,7 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContai
 import { useApp } from '../contexts/AppContext'
 import PageShell from '../components/shared/PageShell'
 import Card from '../components/shared/Card'
-import Badge from '../components/shared/Badge'
+
 
 const harvestTrend = [
   { day: 'Mon', lbs: 6200 },
