@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, User } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useApp } from '../contexts/AppContext'
 import PageShell from '../components/shared/PageShell'
 import Card from '../components/shared/Card'
@@ -36,10 +36,14 @@ const shiftStyles: Record<string, string> = {
   'Off': 'bg-slate-50 text-slate-300 border-slate-100',
 }
 
+const depts = ['All', ...Array.from(new Set(employees.map(e => e.dept)))]
+
 export default function Scheduler() {
   const { device } = useApp()
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const activeFilter = searchParams.get('dept') || 'All'
+  const setActiveFilter = (d: string) => navigate(d === 'All' ? '/scheduler' : `/scheduler?dept=${d}`)
   const isPhone = device === 'phone'
 
   const filtered = activeFilter === 'All' ? employees : employees.filter(e => e.dept === activeFilter)

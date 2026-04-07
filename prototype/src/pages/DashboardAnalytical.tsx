@@ -1,5 +1,4 @@
 import { TrendingUp } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useApp } from '../contexts/AppContext'
 import PageShell from '../components/shared/PageShell'
@@ -40,8 +39,6 @@ const laborEfficiency = [
 
 export default function DashboardAnalytical() {
   const { device } = useApp()
-  const [searchParams] = useSearchParams()
-  const activeSection = searchParams.get('section') || 'Overview'
   const isPhone = device === 'phone'
 
   if (isPhone) {

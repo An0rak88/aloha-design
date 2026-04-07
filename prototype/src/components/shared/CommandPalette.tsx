@@ -4,7 +4,7 @@ import { Search } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as Icons from 'lucide-react'
 import { useApp } from '../../contexts/AppContext'
-import { getNavForRole, roles, allNavItems } from '../../data/roles'
+import { roles, allNavItems } from '../../data/roles'
 
 export default function CommandPalette() {
   const { role, commandPaletteOpen, setCommandPaletteOpen } = useApp()

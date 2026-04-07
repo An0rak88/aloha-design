@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Search, X } from 'lucide-react'
 import * as Icons from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useApp } from '../../contexts/AppContext'
@@ -18,7 +18,18 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const [expandedNav, setExpandedNav] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
   const navItems = getNavForRole(role)
+
+  const filteredNavItems = search.trim()
+    ? navItems.filter(item => {
+        const q = search.toLowerCase()
+        if (item.label.toLowerCase().includes(q)) return true
+        if (item.subItems?.some(sub => sub.label.toLowerCase().includes(q))) return true
+        return false
+      })
+    : navItems
 
   const renderNavItem = (item: NavItem) => {
     const Icon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number }>>)[item.icon]
@@ -115,11 +126,32 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="absolute inset-y-0 left-0 w-[260px] bg-white z-50 flex flex-col shadow-xl"
+            className="absolute inset-0 bg-white z-50 flex flex-col"
           >
-            <div className="flex-1 overflow-y-auto py-2 px-3 mt-1">
+            <div className="px-3 pt-3 pb-1">
+              <div className="relative">
+                <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <input
+                  ref={searchRef}
+                  type="text"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="w-full pl-8 pr-8 py-2 rounded-lg bg-slate-100 border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400/30 transition-all"
+                />
+                {search && (
+                  <button
+                    onClick={() => { setSearch(''); searchRef.current?.focus() }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 bg-transparent border-none cursor-pointer p-0.5 rounded hover:text-slate-600"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto py-2 px-3">
               <div className="flex flex-col gap-0.5">
-                {navItems.map(renderNavItem)}
+                {filteredNavItems.map(renderNavItem)}
               </div>
             </div>
           </motion.nav>

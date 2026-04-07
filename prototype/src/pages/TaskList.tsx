@@ -215,7 +215,7 @@ export default function TaskList() {
   )
 }
 
-function TaskCard({ task, isDone, isExpanded, toggleExpand, isManager, navigate, onComplete, onUncomplete, confirmingId, setConfirmingId, isVolunteer }: {
+function TaskCard({ task, isDone, isExpanded, toggleExpand, isManager, navigate, onComplete: _onComplete, onUncomplete, confirmingId: _confirmingId, setConfirmingId, isVolunteer }: {
   task: Task
   isDone: boolean
   isExpanded: boolean
