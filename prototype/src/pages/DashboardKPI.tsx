@@ -153,7 +153,7 @@ export default function DashboardKPI() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
         {/* GH Yield comparison */}
         <Card className="col-span-2 p-5">
@@ -187,7 +187,7 @@ export default function DashboardKPI() {
               <div className="text-sm text-green-700">All scouting reports submitted on time</div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </PageShell>
   )
