@@ -109,24 +109,20 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   }
 
   return (
-    <nav className={`bg-white border-r border-slate-200 flex flex-col py-4 shrink-0 transition-all duration-200 ${
+    <nav className={`bg-white border-r border-slate-200 flex flex-col pb-4 shrink-0 transition-all duration-200 ${
       collapsed ? 'w-[68px]' : 'w-[220px]'
     }`}>
-      <div className="px-3 mb-2 flex items-center justify-between">
-        {!collapsed && (
-          <span className="text-xs font-medium text-slate-400 uppercase tracking-wider px-3">Navigation</span>
-        )}
+      <div className={`h-[60px] border-b border-slate-200 flex items-center shrink-0 ${collapsed ? 'px-3 justify-center' : 'px-4 justify-between'}`}>
+        {!collapsed && <span className="font-semibold text-slate-700 text-[15px]">Navigation</span>}
         <button
           onClick={onToggle}
-          className={`p-1.5 rounded-lg hover:bg-slate-100 transition-colors border-none bg-transparent cursor-pointer text-slate-400 ${
-            collapsed ? 'mx-auto' : ''
-          }`}
+          className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors border-none bg-transparent cursor-pointer text-slate-400"
         >
           {collapsed ? <PanelLeft size={18} /> : <PanelLeftClose size={18} />}
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-3">
+      <div className="flex-1 overflow-y-auto px-3 pt-3">
         {showAll && canExpand ? (
           <div className="flex flex-col gap-3">
             {sections.map(section => (
@@ -141,7 +137,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-2">
             {navItems.map(renderNavItem)}
           </div>
         )}
